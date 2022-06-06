@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class RoleService {
-    RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
     public List<Role> findAll(){
         return roleRepository.findAll();

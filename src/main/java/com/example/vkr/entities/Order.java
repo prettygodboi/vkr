@@ -32,6 +32,8 @@ public class Order {
     private LocalDate shipmentDate;
 
     private String receiverName;
+
     private String receiverAddress;
+
     private String status;
 }

@@ -3,7 +3,6 @@ package com.example.vkr.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 @Table(name = "roles")

@@ -1,45 +1,21 @@
 package com.example.vkr.services;
 
 import com.example.vkr.entities.User;
-import com.example.vkr.repositories.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
-public class UserService implements UserServiceInterface{
-    private final UserRepository userRepository;
+public interface UserService {
+    User findByLogin(String login);
 
-    @Override
-    public User findByLogin(String login) {
-        return userRepository.findUserByLogin(login);
-    }
+    void deleteByLogin(String login);
 
-    @Override
-    public User deleteByLogin(String login) {
-        return userRepository.deleteByLogin(login);
-    }
+    List<User> findAll();
 
-    @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
+    void deleteById(Long id);
 
-    @Override
-    public void deleteById(Long id) {
-        userRepository.deleteById(id);
-    }
+    void save(User user);
 
-    @Override
-    public void save(User user) {
-        userRepository.save(user);
-    }
-
-    @Override
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
-    }
+    User findById(Long id);
 }
