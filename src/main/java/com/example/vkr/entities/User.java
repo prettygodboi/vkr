@@ -33,6 +33,9 @@ public class User {
     @Column(name = "first_name")
     private String firstName;
 
+    @Column(name = "phone_number")
+    private Integer phoneNumber;
+
     @Column(name = "second_name")
     private String secondName;
 

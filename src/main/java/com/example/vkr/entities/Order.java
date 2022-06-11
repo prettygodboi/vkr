@@ -36,4 +36,6 @@ public class Order {
     private String receiverAddress;
 
     private String status;
+
+    private Integer amount;
 }
