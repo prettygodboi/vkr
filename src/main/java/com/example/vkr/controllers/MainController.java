@@ -19,13 +19,12 @@ public class MainController {
 
     private final ProductService productService;
     private final OrderService orderService;
-    private final UserServiceImpl userServiceImpl;
+    private final UserService userService;
     private final RoleService roleService;
 
 
     @GetMapping
     public String homeMain(Model model) {
-        List<User> users = userServiceImpl.findAll();
         model.addAttribute("title", "Home Page");
         return "HomePage";
     }
@@ -41,18 +40,18 @@ public class MainController {
     @PostMapping("/registration")
     public String addUser(@ModelAttribute("user") User user){
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        userServiceImpl.save(user);
+        userService.save(user);
         return "redirect:/login";
     }
 
     @GetMapping("/user")
     public String user(Principal principal, Model model){
-        model.addAttribute("user", userServiceImpl.findByLogin(principal.getName()));
+        model.addAttribute("user", userService.findByLogin(principal.getName()));
         return "user";
     }
     @GetMapping("/editUser/{id}")
     public String editUserById(Model model, @PathVariable("id")Long id){
-        User user = userServiceImpl.findById(id);
+        User user = userService.findById(id);
 
         model.addAttribute("roles", roleService.findAll());
         model.addAttribute("user", user);
@@ -60,8 +59,7 @@ public class MainController {
     }
     @PostMapping("/editUser")
     public  String editUser(@ModelAttribute("user")User user){
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        userServiceImpl.save(user);
+        userService.save(user);
         return "redirect:/main/user";
     }
 
@@ -83,7 +81,7 @@ public class MainController {
     @GetMapping("/allOrders")
     public String allOrders(Model model) {
         Order order = new Order();
-        List<User> users = userServiceImpl.findAll();
+        List<User> users = userService.findAll();
         List<Product> products = productService.findAll();
 
         model.addAttribute("order", order);
@@ -187,7 +185,7 @@ public class MainController {
 //    }
     @GetMapping("/deleteUser/{id}")
     public String deleteUser(@PathVariable("id") Long id){
-        userServiceImpl.deleteById(id);
+        userService.deleteById(id);
         return "redirect:/main/allUsers";
     }
 

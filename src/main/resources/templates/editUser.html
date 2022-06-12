@@ -46,9 +46,11 @@
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
-                        <form th:action="@{'/main/editUser}' + ${user.id}}"
+                        <form th:action="@{/main/editUser}"
                               th:object="${user}" method="post">
-                        <div class="row mb-3">
+                            <input type="text" class="form-control" th:field="${user.id}" hidden>
+                            <input type="text" class="form-control" th:field="${user.login}" hidden>
+                            <div class="row mb-3">
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Имя</h6>
                             </div>
