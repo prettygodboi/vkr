@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -34,25 +35,19 @@ public class MainController {
         model.addAttribute("user", new User());
         model.addAttribute("roles", roleService.findAll());
         model.addAttribute("registration", "Registration");
-        System.out.println( roleService.findAll());
         return "registration";
     }
 
     @PostMapping("/registration")
     public String addUser(@ModelAttribute("user") User user){
-        System.out.println(user);
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userServiceImpl.save(user);
         return "redirect:/login";
     }
 
     @GetMapping("/user")
-    public String user(Model model){
-        User user = new User();
-        List<User> users  = userServiceImpl.findAll();
-        model.addAttribute("user", user);
-        model.addAttribute("roles", roleService.findAll());
-        model.addAttribute("users", users);
+    public String user(Principal principal, Model model){
+        model.addAttribute("user", userServiceImpl.findByLogin(principal.getName()));
         return "user";
     }
 
@@ -64,25 +59,12 @@ public class MainController {
         orderService.save(order);
         return "redirect:/main/allOrders";
     }
-//
-//    @PostMapping("/addClient")
-//    public String addClient(@ModelAttribute("client") Client client) {
-//        clientService.save(client);
-//        return "redirect:/main/allClients";
-//    }
-//
+
     @PostMapping("/addProduct")
     public String addProduct(@ModelAttribute("product") Product product) {
         productService.save(product);
         return "redirect:/main/allProducts";
     }
-
-//    @PostMapping("/addUser")
-//    public String addUser(@ModelAttribute("user") User user){
-//        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-//        userServiceImpl.save(user);
-//        return "redirect:/main/allUsers";
-//    }
 
     @GetMapping("/allOrders")
     public String allOrders(Model model) {
