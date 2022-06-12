@@ -50,6 +50,20 @@ public class MainController {
         model.addAttribute("user", userServiceImpl.findByLogin(principal.getName()));
         return "user";
     }
+    @GetMapping("/editUser/{id}")
+    public String editUserById(Model model, @PathVariable("id")Long id){
+        User user = userServiceImpl.findById(id);
+
+        model.addAttribute("roles", roleService.findAll());
+        model.addAttribute("user", user);
+        return "editUser";
+    }
+    @PostMapping("/editUser")
+    public  String editUser(@ModelAttribute("user")User user){
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        userServiceImpl.save(user);
+        return "redirect:/main/user";
+    }
 
     @PostMapping("/addOrder")
     public String addGroup(@ModelAttribute("order") Order order) {
@@ -260,21 +274,7 @@ public class MainController {
 //        return "redirect:/main/allTypes";
 //    }
 
-    @GetMapping("/editUser/{id}")
-    public String editUserById(Model model, @PathVariable("id")Long id){
-        User user = userServiceImpl.findById(id);
 
-        model.addAttribute("roles", roleService.findAll());
-        model.addAttribute("user", user);
-        return "admin/editUser";
-    }
-
-    @PostMapping("/editUser")
-    public  String editUser(@ModelAttribute("user")User user){
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        userServiceImpl.save(user);
-        return "redirect:/main/allUsers";
-    }
 
     @GetMapping("/addProduct")
     public void createProduct(){

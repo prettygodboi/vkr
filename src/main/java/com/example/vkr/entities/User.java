@@ -32,6 +32,8 @@ public class User {
 
     private String secondName;
 
+    private String address;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
         joinColumns = @JoinColumn(name = "user_id"),
