@@ -22,5 +22,7 @@ public class Product {
 
     private Double price;
 
-    private Integer inStock;
+    private String amount;
+
+    private String description;
 }

@@ -46,10 +46,20 @@ public class MainController {
         return "redirect:/login";
     }
 
+    @GetMapping("/user")
+    public String user(Model model){
+        User user = new User();
+        List<User> users  = userServiceImpl.findAll();
+        model.addAttribute("user", user);
+        model.addAttribute("roles", roleService.findAll());
+        model.addAttribute("users", users);
+        return "user";
+    }
+
     @PostMapping("/addOrder")
     public String addGroup(@ModelAttribute("order") Order order) {
         Product product = order.getProduct();
-        product.setInStock(product.getInStock() - order.getAmount());
+//        product.setInStock(product.getInStock() - order.getAmount());
         order.setProduct(product);
         orderService.save(order);
         return "redirect:/main/allOrders";
@@ -134,15 +144,15 @@ public class MainController {
 //        model.addAttribute("types", types);
 //        return "admin/types";
 //    }
-    @GetMapping("/allUsers")
-    public String allUsers(Model model) {
-        User user = new User();
-        List<User> users  = userServiceImpl.findAll();
-        model.addAttribute("user", user);
-        model.addAttribute("roles", roleService.findAll());
-        model.addAttribute("users", users);
-        return "admin/users";
-    }
+//    @GetMapping("/allUsers")
+//    public String allUsers(Model model) {
+//        User user = new User();
+//        List<User> users  = userServiceImpl.findAll();
+//        model.addAttribute("user", user);
+//        model.addAttribute("roles", roleService.findAll());
+//        model.addAttribute("users", users);
+//        return "admin/users";
+//    }
 
 
 //    // удаление
@@ -156,7 +166,7 @@ public class MainController {
     public String deleteOrder(@PathVariable("id") Long id) {
         Order order = orderService.findById(id);
         Product product = order.getProduct();
-        product.setInStock(product.getInStock() + order.getAmount());
+//        product.setInStock(product.getInStock() + order.getAmount());
         order.setProduct(product);
         orderService.deleteById(id);
         return "redirect:/main/allOrders";
@@ -249,7 +259,7 @@ public class MainController {
         int previousOrderAmount = previousOrder.getAmount();
         int actualOrderAmount = order.getAmount();
         Product product = order.getProduct();
-        product.setInStock(product.getInStock() + previousOrderAmount - actualOrderAmount);
+//        product.setInStock(product.getInStock() + previousOrderAmount - actualOrderAmount);
         order.setProduct(product);
         orderService.save(order);
 
