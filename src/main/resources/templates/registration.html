@@ -7,71 +7,43 @@
     <title>Регистрация</title>
 </head>
 <body>
-<main class="my-form">
-    <div class="container mt-5">
-        <div class="row justify-content-center align-items-center">
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="card-header">Регистрация</div>
-                    <div class="card-body">
-                        <form name="my-form" onsubmit="return validform()" action="success.php" method="post">
-                            <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">Имя</label>
-                                <div class="col-md-6">
-                                    <input type="text" id="name" class="form-control" name="name">
-                                </div>
-                            </div>
+<h3>Добавить клиента</h3>
+<div class="container">
+    <form th:action="@{/main/registration}"
+          th:object="${user}" method="post">
+        <label>
+            <input th:field="${user.id}" placeholder="id" hidden>
+        </label>
+        <label>
+            <input th:field="${user.login}" placeholder="login">
+        </label>
+        <label>
+            <input th:field="${user.email}" placeholder="email">
+        </label>
+        <label>
+            <input th:field="${user.firstName}" placeholder="firstName">
+        </label>
 
-                            <div class="form-group row">
-                                <label for="second_name" class="col-md-4 col-form-label text-md-right">Фамилия</label>
-                                <div class="col-md-6">
-                                    <input type="text" id="second_name" class="form-control" name="second_name">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
-                                <div class="col-md-6">
-                                    <input type="text" id="email_address" class="form-control" name="email-address">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="login" class="col-md-4 col-form-label text-md-right">Логин</label>
-                                <div class="col-md-6">
-                                    <input type="text" id="login" class="form-control" name="login">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="login" class="col-md-4 col-form-label text-md-right">Пароль</label>
-                                <div class="col-md-6">
-                                    <input type="text" id="password" class="form-control" name="password">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="phone_number" class="col-md-4 col-form-label text-md-right">Номер телефона</label>
-                                <div class="col-md-6">
-                                    <input type="text" id="phone_number" class="form-control">
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-6 offset-md-7 mt-1">
-                                <button type="submit" class="btn btn-primary">
-                                    Готово
-                                </button>
-                            </div>
-                        </form></div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-</main>
+        <label>
+            <input th:field="${user.phoneNumber}" placeholder="phoneNumber">
+        </label>
+        <label>
+            <input th:field="${user.secondName}" placeholder="secondName">
+        </label>
+        <label>
+            <input th:field="${user.password}" placeholder="password">
+        </label>
+        <label>
+            <select th:field="${user.roles}">
+                <option th:each="role: ${roles}"
+                        th:text="${role.name == 'ROLE_USER' ? 'Пользователь' : 'Администратор'}"
+                        th:value="${role.id}">
+                </option>
+            </select>
+        </label>
+        <button type="submit">Добавить</button>
+    </form>
+</div>
 
 </body>
 </html>

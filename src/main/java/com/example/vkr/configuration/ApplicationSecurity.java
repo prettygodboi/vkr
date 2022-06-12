@@ -32,7 +32,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
-                .antMatchers("/", "/main").permitAll()
+                .antMatchers("/**").permitAll()
                 .and()
                 .formLogin()
                 .defaultSuccessUrl("/main/", true);

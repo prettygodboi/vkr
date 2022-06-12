@@ -31,12 +31,16 @@ public class MainController {
 
     @GetMapping("/registration")
     public String registration(Model model){
+        model.addAttribute("user", new User());
+        model.addAttribute("roles", roleService.findAll());
         model.addAttribute("registration", "Registration");
+        System.out.println( roleService.findAll());
         return "registration";
     }
 
     @PostMapping("/registration")
     public String addUser(@ModelAttribute("user") User user){
+        System.out.println(user);
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userServiceImpl.save(user);
         return "redirect:/login";

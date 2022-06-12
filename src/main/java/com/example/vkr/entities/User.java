@@ -18,25 +18,18 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "login")
     private String login;
 
-    @Column(name = "password")
     private String password;
 
-    @Column(name = "email")
     private String email;
 
-    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "phone_number")
-    private Integer phoneNumber;
+    private String phoneNumber;
 
-    @Column(name = "second_name")
     private String secondName;
 
     @ManyToMany(fetch = FetchType.EAGER)
