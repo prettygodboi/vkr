@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Добавление товара</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Добавление товара</title>
+</head>
+<body>
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/main" class="nav-link px-2 link-secondary">Главная</a></li>
+            <li><a href="/main/products" class="nav-link px-2 link-dark">Товары</a></li>
+            <li><a href="/main/orders" class="nav-link px-2 link-dark">Мои заказы</a></li>
+            <li><a href="/main/user" class="nav-link px-2 link-dark">Аккаунт</a></li>
+        </ul>
+
+        <div class="col-md-3 text-end">
+            <a href="/logout" >
+                <button type="button" class="btn btn-outline-primary me-2">Выйти</button>
+            </a>
+        </div>
+    </header>
+</div>
+
+<div class="container mt-5 mb-5">
+    <h1>Добавление заказа</h1>
+    <form th:action="@{/main/addOrder}"
+          th:object="${order}" method="post">
+        <input th:field="${order.id}" placeholder="id" hidden>
+        <input th:field="${product}" placeholder="" hidden>
+
+
+        <!--        <label>-->
+<!--            <select th:field="${order.user}">-->
+<!--                <option th:each="user : ${users}"-->
+<!--                        th:text="${user.secondName}"-->
+<!--                        th:value="${user.getId()}">-->
+<!--                </option>-->
+<!--            </select>-->
+<!--        </label>-->
+
+
+<!--        <label>-->
+<!--            <select th:field="${order.product}">-->
+<!--                <option th:each="product : ${products}"-->
+<!--                        th:text="${product.name}"-->
+<!--                        th:value="${product.getId()}">-->
+<!--                </option>-->
+<!--            </select>-->
+<!--        </label>-->
+
+<!--        <input type="text" th:field="${order.receiverName}" placeholder="Имя получателя" class="form-control">-->
+        <input type="text" th:field="${order.amount}" placeholder="Колличество" class="form-control">
+<!--        <input type="text" th:field="${order.shipmentDate}" placeholder="Дата отправления" class="form-control">-->
+        <input type="text" th:field="${order.receiverAddress}" placeholder="Адрес получателя" class="form-control">
+<!--        <textarea th:field="${product.description}" placeholder="Описание" class="form-control"></textarea>-->
+        <button type="submit" class="btn btn-success">Добавить</button>
+    </form>
+</div>
+
+<footer class="text-muted py-5">
+    <div class="container">
+        <p class="float-end mb-1">
+            <a href="#">Back to top</a>
+        </p>
+        <p class="mb-1">@prettygodboi</p>
+    </div>
+</footer>
+</body>
+</html>

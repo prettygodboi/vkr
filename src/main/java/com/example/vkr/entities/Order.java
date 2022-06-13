@@ -1,6 +1,8 @@
 package com.example.vkr.entities;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -11,6 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
+@EntityListeners(AuditingEntityListener.class)
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
@@ -28,8 +31,9 @@ public class Order {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @CreatedDate
     @DateTimeFormat(pattern = "dd-mm-yyyy")
-    private LocalDate shipmentDate;
+    private LocalDate orderDate;
 
     private String receiverName;
 

@@ -28,18 +28,23 @@
     </header>
 </div>
 
-<div class="container mt-5">
-    <h1>Товары</h1>
-    <div class="col-sm-12">
-        <div sec:authorize="hasRole('ADMIN')">
-        <a href="/main/addProduct">
-        <button type="button" class="btn btn-primary" >Добавить</button>
-        </a>
+<div class="container mt-5 mb-5">
+    <div th:each="order : ${orders}" class="alert alert-info mt-2">
+        <h3 th:text="${order.product.name}"/>
+        <p th:text="${order.user.secondName}"/>
+        <p th:text="${order.product.price}+${order.amount}"/>
+        <p th:text="${order.product.amount}"/>
+        <p th:text="${order.product.description}"/>
+        <p th:text="${order.shipmentDate}"/>
+        <p th:text="${order.receiverName}"/>
+        <p th:text="${order.receiverAddress}"/>
+        <p th:text="${order.receiverAddress}"/>
+        <p th:text="${order.status}"/>
+        <a th:href="'/main/products/' + ${product.id}" class="btn btn-warning">Доставить</a>
+        <div sec:authorize="hasRole('USER')">
+            <a th:href="@{'/main/editProduct/' + ${product.id}}" class="btn btn-warning">Редактировать</a>
+            <a th:href="@{'/main/deleteProduct/' + ${product.id}}" class="btn btn-warning">Удалить</a>
         </div>
-    </div>
-    <div th:each="product : ${products}" class="alert alert-info mt-2">
-        <h3 th:text="${product.name}"/>
-        <a th:href="@{'/main/products/' + ${product.id}}" class="btn btn-primary">Детальнее</a>
     </div>
 </div>
 

@@ -93,29 +93,50 @@ public class MainController {
         return "productDetails";
     }
 
+    @GetMapping("/editProduct/{id}")
+    public String editProductById(Model model, @PathVariable("id") Long id) {
+        Product product = productService.findById(id);
+        model.addAttribute("product", product);
+        return "editProduct";
+    }
+
+    @PostMapping("/editProduct")
+    public String editProduct(@ModelAttribute("product") Product product){
+        productService.save(product);
+        return "redirect:/main/products";
+    }
+    @GetMapping("/deleteProduct/{id}")
+    public String deleteProduct(@PathVariable("id") Long id) {
+        productService.deleteById(id);
+        return "redirect:/main/products";
+    }
+
     @PostMapping("/addOrder")
     public String addGroup(@ModelAttribute("order") Order order) {
-        Product product = order.getProduct();
+//        Product product = order.getProduct();
 //        product.setInStock(product.getInStock() - order.getAmount());
-        order.setProduct(product);
+//        order.setProduct(product);
+        System.out.println(order);
         orderService.save(order);
-        return "redirect:/main/allOrders";
+        return "redirect:/main/orders";
     }
-    @GetMapping("/allOrders")
-    public String allOrders(Model model) {
-        Order order = new Order();
+
+    @GetMapping("/addOrder")
+    public String addOrder(Model model, Product product){
+        model.addAttribute("order", new Order());
+        model.addAttribute("product", product);
+        return "addOrder";
+    }
+
+    @GetMapping("/orders")
+    public String allOrders(Model model, Principal principal) {
         List<User> users = userService.findAll();
         List<Product> products = productService.findAll();
-
-        model.addAttribute("order", order);
-        model.addAttribute("orders", orderService.findAll());
+        model.addAttribute("orders", orderService.findOrderByLogin(principal.getName()));
         model.addAttribute("users", users);
-
         model.addAttribute("products", products);
-        return "admin/orders";
+        return "orders";
     }
-
-
 //    @GetMapping("/allUsers")
 //    public String allUsers(Model model) {
 //        User user = new User();
@@ -123,7 +144,9 @@ public class MainController {
 //        model.addAttribute("user", user);
 //        model.addAttribute("roles", roleService.findAll());
 //        model.addAttribute("users", users);
+
 //        return "admin/users";
+
 //    }
 
     @GetMapping("/deleteOrder/{id}")
@@ -136,18 +159,11 @@ public class MainController {
         return "redirect:/main/allOrders";
     }
 
-    @GetMapping("/deleteProduct/{id}")
-    public String deleteProduct(@PathVariable("id") Long id) {
-        productService.deleteById(id);
-        return "redirect:/main/allProducts";
-    }
-
     @GetMapping("/deleteUser/{id}")
     public String deleteUser(@PathVariable("id") Long id){
         userService.deleteById(id);
         return "redirect:/main/allUsers";
     }
-
 //    @GetMapping("/editSupplier/{id}")
 //    public String editSupplierById(Model model, @PathVariable("id") Long id) {
 //        Supplier supplier = supplierService.findById(id);
@@ -171,20 +187,8 @@ public class MainController {
 //    public String editClient(@ModelAttribute("client") Client client){
 //        clientService.save(client);
 //        return "redirect:/main/allClients";
+
 //    }
-
-    @GetMapping("/editProduct/{id}")
-    public String editProductById(Model model, @PathVariable("id") Long id) {
-        Product product = productService.findById(id);
-        model.addAttribute("product", product);
-        return "admin/editProduct";
-    }
-
-    @PostMapping("editProduct")
-    public String editProduct(@ModelAttribute("product") Product product){
-        productService.save(product);
-        return "redirect:/main/products";
-    }
 
     @GetMapping("/editOrder/{id}")
     public String editOrderById(Model model, @PathVariable("id")Long id){
@@ -210,11 +214,6 @@ public class MainController {
 
         return "redirect:/main/allOrders";
     }
-//    @GetMapping("/addProduct")
-//    public void createProduct(){
-//        Product product = Product.builder().name("Шлёпка").build();
-//        productService.save(product);
-//    }
 
 
 }

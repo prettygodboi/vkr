@@ -28,16 +28,18 @@
     </header>
 </div>
 
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
     <div th:each="product : ${product}" class="alert alert-info mt-2">
         <h3 th:text="${product.name}"/>
         <p th:text="${product.price}"/>
         <p th:text="${product.amount}"/>
         <p th:text="${product.description}"/>
-        <a th:href="'/main/products/' + ${product.id}" class="btn btn-warning">Доставить</a>
+        <a href="/main/addOrder" th:action="@{/main/addProduct}">
+            <button type="button" class="btn btn-warning" >Доставить</button>
+        </a>
         <div sec:authorize="hasRole('ADMIN')">
         <a th:href="@{'/main/editProduct/' + ${product.id}}" class="btn btn-warning">Редактировать</a>
-        <a th:href="@{'/main/deliteProduct/' + ${product.id}}" class="btn btn-warning">Удалить</a>
+        <a th:href="@{'/main/deleteProduct/' + ${product.id}}" class="btn btn-warning">Удалить</a>
         </div>
     </div>
 </div>
