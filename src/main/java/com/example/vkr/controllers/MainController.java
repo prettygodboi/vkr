@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -63,6 +64,35 @@ public class MainController {
         return "redirect:/main/user";
     }
 
+    @GetMapping("/products")
+    public String allProducts(Model model) {
+        Product product = new Product();
+        List<Product> products = productService.findAll();
+        List<Order> orders = orderService.findAll();
+        model.addAttribute("product", product);
+        model.addAttribute("products", products);
+        model.addAttribute("orders", orders);
+        return "products";
+    }
+
+    @GetMapping("/addProduct")
+    public String addProducts(Model model){
+        model.addAttribute("product", new Product());
+        return "addProduct";
+    }
+
+    @PostMapping("/addProduct")
+    public String addProduct(@ModelAttribute("product") Product product) {
+        productService.save(product);
+        return "redirect:/main/products";
+    }
+    @GetMapping("/products/{id}")
+    public String productDetails(@PathVariable("id") Long id, Model model){
+        Product product = productService.findById(id);
+        model.addAttribute("product", product);
+        return "productDetails";
+    }
+
     @PostMapping("/addOrder")
     public String addGroup(@ModelAttribute("order") Order order) {
         Product product = order.getProduct();
@@ -71,13 +101,6 @@ public class MainController {
         orderService.save(order);
         return "redirect:/main/allOrders";
     }
-
-    @PostMapping("/addProduct")
-    public String addProduct(@ModelAttribute("product") Product product) {
-        productService.save(product);
-        return "redirect:/main/allProducts";
-    }
-
     @GetMapping("/allOrders")
     public String allOrders(Model model) {
         Order order = new Order();
@@ -91,53 +114,8 @@ public class MainController {
         model.addAttribute("products", products);
         return "admin/orders";
     }
-//
-//    @GetMapping("/allClients")
-//    public String allClients(Model model) {
-//        Client client = new Client();
-//
-//        model.addAttribute("client", client);
-//        model.addAttribute("clients", clientService.findAll());
-//
-//        return "admin/clients";
-//    }
-//
-//
-    @GetMapping("/allProducts")
-    public String allProducts(Model model) {
-        Product product = new Product();
-        List<Product> products = productService.findAll();
-//        List<Supplier> suppliers = supplierService.findAll();
-//        List<Type> types = typeService.findAll();
-        List<Order> orders = orderService.findAll();
 
 
-        model.addAttribute("product", product);
-        model.addAttribute("products", products);
-//        model.addAttribute("suppliers", suppliers);
-//        model.addAttribute("types", types);
-        model.addAttribute("orders", orders);
-
-        return "admin/products";
-    }
-//
-//    @GetMapping("/allSuppliers")
-//    public String allSuppliers(Model model) {
-//        Supplier supplier = new Supplier();
-//        List<Supplier> suppliers = supplierService.findAll();
-//        model.addAttribute("supplier", supplier);
-//        model.addAttribute("suppliers", suppliers);
-//        return "admin/suppliers";
-//    }
-//
-//    @GetMapping("/allTypes")
-//    public String allTypes(Model model) {
-//        Type type = new Type();
-//        List<Type> types = typeService.findAll();
-//        model.addAttribute("type", type);
-//        model.addAttribute("types", types);
-//        return "admin/types";
-//    }
 //    @GetMapping("/allUsers")
 //    public String allUsers(Model model) {
 //        User user = new User();
@@ -146,14 +124,6 @@ public class MainController {
 //        model.addAttribute("roles", roleService.findAll());
 //        model.addAttribute("users", users);
 //        return "admin/users";
-//    }
-
-
-//    // удаление
-//    @GetMapping("/deleteClient/{id}")
-//    public String deleteClient(@PathVariable("id") Long id) {
-//        clientService.deleteById(id);
-//        return "redirect:/main/allClients";
 //    }
 
     @GetMapping("/deleteOrder/{id}")
@@ -172,17 +142,6 @@ public class MainController {
         return "redirect:/main/allProducts";
     }
 
-//    @GetMapping("/deleteSupplier/{id}")
-//    public String deleteSupplier(@PathVariable("id") Long id) {
-//        supplierService.deleteById(id);
-//        return "redirect:/main/allSuppliers";
-//    }
-//
-//    @GetMapping("/deleteType/{id}")
-//    public String deleteType(@PathVariable("id") Long id) {
-//        typeService.deleteById(id);
-//        return "redirect:/main/allTypes";
-//    }
     @GetMapping("/deleteUser/{id}")
     public String deleteUser(@PathVariable("id") Long id){
         userService.deleteById(id);
@@ -217,26 +176,19 @@ public class MainController {
     @GetMapping("/editProduct/{id}")
     public String editProductById(Model model, @PathVariable("id") Long id) {
         Product product = productService.findById(id);
-//        List<Supplier> suppliers = supplierService.findAll();
-//        List<Type> types = typeService.findAll();
-
         model.addAttribute("product", product);
-//        model.addAttribute("suppliers", suppliers);
-//        model.addAttribute("types", types);
         return "admin/editProduct";
     }
 
     @PostMapping("editProduct")
     public String editProduct(@ModelAttribute("product") Product product){
         productService.save(product);
-        return "redirect:/main/allProducts";
+        return "redirect:/main/products";
     }
 
     @GetMapping("/editOrder/{id}")
     public String editOrderById(Model model, @PathVariable("id")Long id){
         Order order = orderService.findById(id);
-//        List<Employee> employees = employeeService.findAll();
-//        List<Client> clients = clientService.findAll();
         List<Product> products = productService.findAll();
 
         model.addAttribute("order", order);
@@ -253,32 +205,16 @@ public class MainController {
         int previousOrderAmount = previousOrder.getAmount();
         int actualOrderAmount = order.getAmount();
         Product product = order.getProduct();
-//        product.setInStock(product.getInStock() + previousOrderAmount - actualOrderAmount);
         order.setProduct(product);
         orderService.save(order);
 
         return "redirect:/main/allOrders";
     }
-//    @GetMapping("/editType/{id}")
-//    public String editTypeById(Model model, @PathVariable("id") Long id) {
-//        Type type = typeService.findById(id);
-//        model.addAttribute("type", type);
-//        return "admin/editType";
+//    @GetMapping("/addProduct")
+//    public void createProduct(){
+//        Product product = Product.builder().name("Шлёпка").build();
+//        productService.save(product);
 //    }
-//
-//    @PostMapping("editType")
-//    public  String editType(@ModelAttribute("type")Type type){
-//        typeService.save(type);
-//        return "redirect:/main/allTypes";
-//    }
-
-
-
-    @GetMapping("/addProduct")
-    public void createProduct(){
-        Product product = Product.builder().name("Шлёпка").build();
-        productService.save(product);
-    }
 
 
 }
