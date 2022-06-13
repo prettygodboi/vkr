@@ -34,7 +34,7 @@
         <p th:text="${product.price}"/>
         <p th:text="${product.amount}"/>
         <p th:text="${product.description}"/>
-        <a href="/main/addOrder" th:action="@{/main/addProduct}">
+        <a methods="get" th:href="@{'/main/addOrder/product/' + ${product.id}}">
             <button type="button" class="btn btn-warning" >Доставить</button>
         </a>
         <div sec:authorize="hasRole('ADMIN')">

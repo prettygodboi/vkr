@@ -113,28 +113,31 @@ public class MainController {
 
     @PostMapping("/addOrder")
     public String addGroup(@ModelAttribute("order") Order order) {
-//        Product product = order.getProduct();
-//        product.setInStock(product.getInStock() - order.getAmount());
-//        order.setProduct(product);
-        System.out.println(order);
         orderService.save(order);
         return "redirect:/main/orders";
     }
 
-    @GetMapping("/addOrder")
-    public String addOrder(Model model, Product product){
-        model.addAttribute("order", new Order());
-        model.addAttribute("product", product);
+    @GetMapping("/addOrder/product/{id}")
+    public String addOrder(Model model, @PathVariable("id") Long id, Principal principal){
+        System.out.println(productService.findById(id));
+        model.addAttribute("order", Order.builder()
+                .product(productService.findById(id))
+                .user(userService.findByLogin(principal.getName()))
+                .build());
         return "addOrder";
     }
 
+//    @PostMapping("/addOrder/product/{id}")
+//    public String addOrder(Model model, @PathVariable("id") Long id){
+//        model.addAttribute("order", new Order());
+//        model.addAttribute("product", productService.findById(id));
+//        System.out.println(productService.findById(id));
+//        return "addOrder";
+//    }
+
     @GetMapping("/orders")
     public String allOrders(Model model, Principal principal) {
-        List<User> users = userService.findAll();
-        List<Product> products = productService.findAll();
         model.addAttribute("orders", orderService.findOrderByLogin(principal.getName()));
-        model.addAttribute("users", users);
-        model.addAttribute("products", products);
         return "orders";
     }
 //    @GetMapping("/allUsers")

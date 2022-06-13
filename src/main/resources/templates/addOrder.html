@@ -33,29 +33,9 @@
     <form th:action="@{/main/addOrder}"
           th:object="${order}" method="post">
         <input th:field="${order.id}" placeholder="id" hidden>
-        <input th:field="${product}" placeholder="" hidden>
+        <input th:field="${order.product}" placeholder="product" hidden>
+        <input th:field="${order.user}" placeholder="user" hidden>
 
-
-        <!--        <label>-->
-<!--            <select th:field="${order.user}">-->
-<!--                <option th:each="user : ${users}"-->
-<!--                        th:text="${user.secondName}"-->
-<!--                        th:value="${user.getId()}">-->
-<!--                </option>-->
-<!--            </select>-->
-<!--        </label>-->
-
-
-<!--        <label>-->
-<!--            <select th:field="${order.product}">-->
-<!--                <option th:each="product : ${products}"-->
-<!--                        th:text="${product.name}"-->
-<!--                        th:value="${product.getId()}">-->
-<!--                </option>-->
-<!--            </select>-->
-<!--        </label>-->
-
-<!--        <input type="text" th:field="${order.receiverName}" placeholder="Имя получателя" class="form-control">-->
         <input type="text" th:field="${order.amount}" placeholder="Колличество" class="form-control">
 <!--        <input type="text" th:field="${order.shipmentDate}" placeholder="Дата отправления" class="form-control">-->
         <input type="text" th:field="${order.receiverAddress}" placeholder="Адрес получателя" class="form-control">
