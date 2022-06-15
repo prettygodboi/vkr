@@ -18,6 +18,6 @@ CREATE TABLE user_roles(
 INSERT INTO users (login, password, first_name, second_name, email) VALUES (
 'admin','$2a$10$i0OAZ6RAUOfXKBLrNPH5P.6GoqTPrV1x7Q8yvhl0Mitvc00R1hmxy' , 'dima', 'dimasik', 'dima.atzo@gmail.com');
 INSERT INTO users (login, password, first_name, second_name, email) VALUES (
-'user','$2a$10$i0OAZ6RAUOfXKBLrNPH5P.6GoqTPrV1x7Q8yvhl0Mitvc00R1hmxy' ,'user', 'hyuseer', 'hyemail@mail.ru');
+'user','$2a$10$i0OAZ6RAUOfXKBLrNPH5P.6GoqTPrV1x7Q8yvhl0Mitvc00R1hmxy' ,'ivan', 'vanya', 'email@mail.ru');
 
 INSERT INTO user_roles (user_id, role_id) VALUES (1, 2), (2, 1);

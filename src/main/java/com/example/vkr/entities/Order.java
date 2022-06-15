@@ -42,5 +42,5 @@ public class Order {
 
     private String status;
 
-    private Integer amount;
+    private String amount;
 }

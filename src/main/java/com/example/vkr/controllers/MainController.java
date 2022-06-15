@@ -82,7 +82,9 @@ public class MainController {
     }
 
     @PostMapping("/addProduct")
-    public String addProduct(@ModelAttribute("product") Product product) {
+    public String addProduct(@ModelAttribute("product") Product product, Principal principal) {
+//        userService.findByLogin(principal.getName());
+        product.setUser(userService.findByLogin(principal.getName()));
         productService.save(product);
         return "redirect:/main/products";
     }
@@ -112,7 +114,7 @@ public class MainController {
     }
 
     @PostMapping("/addOrder")
-    public String addGroup(@ModelAttribute("order") Order order) {
+    public String addGroup(@ModelAttribute("order") Order order){
         orderService.save(order);
         return "redirect:/main/orders";
     }
@@ -139,6 +141,12 @@ public class MainController {
     public String allOrders(Model model, Principal principal) {
         model.addAttribute("orders", orderService.findOrderByLogin(principal.getName()));
         return "orders";
+    }
+    @GetMapping("/orders/{id}")
+    public String allOrders(@PathVariable("id") Long id,Model model) {
+        Order order = orderService.findById(id);
+        model.addAttribute("order", order);
+        return "orderDetails";
     }
 //    @GetMapping("/allUsers")
 //    public String allUsers(Model model) {
@@ -209,8 +217,8 @@ public class MainController {
     @Transactional
     public String editOrder(@ModelAttribute("order")Order order){
         Order previousOrder = orderService.findById(order.getId());
-        int previousOrderAmount = previousOrder.getAmount();
-        int actualOrderAmount = order.getAmount();
+//        int previousOrderAmount = previousOrder.getAmount();
+//        int actualOrderAmount = order.getAmount();
         Product product = order.getProduct();
         order.setProduct(product);
         orderService.save(order);

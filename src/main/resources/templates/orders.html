@@ -31,19 +31,11 @@
 <div class="container mt-5">
     <h1>Мои заказы</h1>
     <div th:each="order : ${orders}" class="alert alert-info mt-2">
-        <h3 th:text="${order.id}"/>
+        <h3 th:text="${order.product.name}"/>
+        <p th:text="${order.orderDate}"/>
         <a th:href="@{'/main/orders/' + ${order.id}}" class="btn btn-primary">Детальнее</a>
     </div>
 </div>
 
-<footer class="text-muted py-5">
-    <div class="container">
-        <p class="float-end mb-1">
-            <a href="#">Back to top</a>
-        </p>
-        <p class="mb-1">Album example is © Bootstrap, but please download and customize it for yourself!</p>
-        <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="/docs/5.2/getting-started/introduction/">getting started guide</a>.</p>
-    </div>
-</footer>
 </body>
 </html>

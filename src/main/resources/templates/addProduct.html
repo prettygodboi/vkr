@@ -34,7 +34,7 @@
           th:object="${product}" method="post">
         <input type="text" th:field="${product.name}" placeholder="Название товара" class="form-control">
         <input type="text" th:field="${product.price}" placeholder="Цена" class="form-control">
-        <input type="text" th:field="${product.amount}" placeholder="Колличество" class="form-control">
+        <input type="text" th:field="${product.amount}" placeholder="Количество" class="form-control">
         <textarea th:field="${product.description}" placeholder="Описание" class="form-control"></textarea>
         <button type="submit" class="btn btn-success">Добавить товар</button>
     </form>

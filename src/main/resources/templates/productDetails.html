@@ -16,14 +16,28 @@
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="/main" class="nav-link px-2 link-secondary">Главная</a></li>
             <li><a href="/main/products" class="nav-link px-2 link-dark">Товары</a></li>
-            <li><a href="/main/orders" class="nav-link px-2 link-dark">Мои заказы</a></li>
-            <li><a href="/main/user" class="nav-link px-2 link-dark">Аккаунт</a></li>
+            <li><div sec:authorize="isAuthenticated()" > <a href="/main/orders" class="nav-link px-2 link-dark">Мои заказы</a> </div> </li>
+            <li><div sec:authorize="isAuthenticated()" > <a href="/main/user" class="nav-link px-2 link-dark">Аккаунт</a> </div> </li>
+
         </ul>
 
+
         <div class="col-md-3 text-end">
-            <a href="/logout" >
-                <button type="button" class="btn btn-outline-primary me-2">Выйти</button>
-            </a>
+            <div sec:authorize="isAuthenticated()" >
+                <a href="/logout" >
+                    <button type="button" class="btn btn-outline-primary me-2">Выйти</button>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3 text-end">
+            <div sec:authorize="!isAuthenticated()">
+                <a href="/login" >
+                    <button type="button" class="btn btn-outline-primary me-2">Войти</button>
+                </a>
+                <a href="/main/registration">
+                    <button type="button" class="btn btn-primary">Зарегистрироваться</button>
+                </a>
+            </div>
         </div>
     </header>
 </div>
@@ -31,11 +45,18 @@
 <div class="container mt-5 mb-5">
     <div th:each="product : ${product}" class="alert alert-info mt-2">
         <h3 th:text="${product.name}"/>
+        <p th:text="${product.user.secondName}"/>
+        <p th:text="${product.user.firstName}"/>
+        <p th:text="${product.user.address}"/>
+        <p th:text="${product.user.email}"/>
+        <p th:text="${product.user.phoneNumber}"/>
         <p th:text="${product.price}"/>
         <p th:text="${product.amount}"/>
         <p th:text="${product.description}"/>
+        <div sec:authorize="hasRole('USER')">
         <a methods="get" th:href="@{'/main/addOrder/product/' + ${product.id}}">
             <button type="button" class="btn btn-warning" >Доставить</button>
+        </div>
         </a>
         <div sec:authorize="hasRole('ADMIN')">
         <a th:href="@{'/main/editProduct/' + ${product.id}}" class="btn btn-warning">Редактировать</a>
@@ -44,14 +65,6 @@
     </div>
 </div>
 
-<footer class="text-muted py-5">
-    <div class="container">
-        <p class="float-end mb-1">
-            <a href="#">Back to top</a>
-        </p>
-        <p class="mb-1">Album example is © Bootstrap, but please download and customize it for yourself!</p>
-        <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="/docs/5.2/getting-started/introduction/">getting started guide</a>.</p>
-    </div>
-</footer>
+
 </body>
 </html>

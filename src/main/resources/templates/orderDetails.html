@@ -29,33 +29,27 @@
 </div>
 
 <div class="container mt-5 mb-5">
-    <div th:each="order : ${orders}" class="alert alert-info mt-2">
+    <div  class="alert alert-info mt-2">
         <h3 th:text="${order.product.name}"/>
-        <p th:text="${order.user.secondName}"/>
-        <p th:text="${order.product.price}+${order.amount}"/>
+        <input th:field="${order.id}" placeholder="id" hidden>
+        <p th:text="${order.product.user.secondName}"/>
+        <p th:text="${order.product.user.firstName}"/>
+        <p th:text="${order.product.user.address}"/>
+        <p th:text="${order.product.user.email}"/>
+        <p th:text="${order.product.user.phoneNumber}"/>
+        <p th:text="${order.product.price}"/>
         <p th:text="${order.product.amount}"/>
         <p th:text="${order.product.description}"/>
-        <p th:text="${order.shipmentDate}"/>
-        <p th:text="${order.receiverName}"/>
-        <p th:text="${order.receiverAddress}"/>
-        <p th:text="${order.receiverAddress}"/>
+        <p th:text="${order.orderDate}"/>
+
         <p th:text="${order.status}"/>
-        <a th:href="'/main/products/' + ${product.id}" class="btn btn-warning">Доставить</a>
-        <div sec:authorize="hasRole('USER')">
-            <a th:href="@{'/main/editProduct/' + ${product.id}}" class="btn btn-warning">Редактировать</a>
-            <a th:href="@{'/main/deleteProduct/' + ${product.id}}" class="btn btn-warning">Удалить</a>
-        </div>
+<!--        <div sec:authorize="hasRole('USER')">-->
+<!--            <a th:href="@{'/main/editProduct/' + ${product.id}}" class="btn btn-warning">Редактировать</a>-->
+<!--            <a th:href="@{'/main/deleteProduct/' + ${product.id}}" class="btn btn-warning">Удалить</a>-->
+<!--        </div>-->
     </div>
 </div>
 
-<footer class="text-muted py-5">
-    <div class="container">
-        <p class="float-end mb-1">
-            <a href="#">Back to top</a>
-        </p>
-        <p class="mb-1">Album example is © Bootstrap, but please download and customize it for yourself!</p>
-        <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="/docs/5.2/getting-started/introduction/">getting started guide</a>.</p>
-    </div>
-</footer>
+
 </body>
 </html>

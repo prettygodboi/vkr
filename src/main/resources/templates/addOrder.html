@@ -36,21 +36,12 @@
         <input th:field="${order.product}" placeholder="product" hidden>
         <input th:field="${order.user}" placeholder="user" hidden>
 
-        <input type="text" th:field="${order.amount}" placeholder="Колличество" class="form-control">
-<!--        <input type="text" th:field="${order.shipmentDate}" placeholder="Дата отправления" class="form-control">-->
-        <input type="text" th:field="${order.receiverAddress}" placeholder="Адрес получателя" class="form-control">
-<!--        <textarea th:field="${product.description}" placeholder="Описание" class="form-control"></textarea>-->
+        <input type="text" th:field="${order.amount}" placeholder="Количество" class="form-control">
+<!--        <input type="text" th:field="${order.receiverAddress}" placeholder="Адрес получателя" class="form-control">-->
+        <input type="text" th:field="${order.status}" placeholder="Стаутс заказа" class="form-control">
         <button type="submit" class="btn btn-success">Добавить</button>
     </form>
 </div>
 
-<footer class="text-muted py-5">
-    <div class="container">
-        <p class="float-end mb-1">
-            <a href="#">Back to top</a>
-        </p>
-        <p class="mb-1">@prettygodboi</p>
-    </div>
-</footer>
 </body>
 </html>
