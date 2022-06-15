@@ -15,16 +15,24 @@ public class OrderService {
     public void save(Order order){
         orderRepository.save(order);
     }
+
     public List<Order> findAll(){
         return orderRepository.findAll();
     }
+
     public Order findById(Long id){
         return orderRepository.findById(id).orElse(null);
     }
+
     public void deleteById(Long id){
         orderRepository.deleteById(id);
     }
+
     public List<Order> findOrderByLogin(String login){
         return orderRepository.findAllByUser_Login(login);
+    }
+
+    public List<Order> findOrderByProductUserLogin(String login){
+        return orderRepository.findAllByProduct_User_Login(login);
     }
 }
