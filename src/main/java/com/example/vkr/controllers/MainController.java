@@ -3,6 +3,7 @@ package com.example.vkr.controllers;
 import com.example.vkr.entities.*;
 import com.example.vkr.services.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -139,7 +140,11 @@ public class MainController {
 
     @GetMapping("/orders")
     public String allOrders(Model model, Principal principal) {
-        model.addAttribute("orders", orderService.findOrderByLogin(principal.getName()));
+        if (userService.findByLogin(principal.getName()).getRoles().contains(roleService.findById(2L))){
+            model.addAttribute("orders", orderService.findOrderByProductUserLogin(principal.getName()));
+        }else {
+            model.addAttribute("orders", orderService.findOrderByLogin(principal.getName()));
+        }
         return "orders";
     }
     @GetMapping("/orders/{id}")
