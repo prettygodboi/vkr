@@ -84,7 +84,6 @@ public class MainController {
 
     @PostMapping("/addProduct")
     public String addProduct(@ModelAttribute("product") Product product, Principal principal) {
-//        userService.findByLogin(principal.getName());
         product.setUser(userService.findByLogin(principal.getName()));
         productService.save(product);
         return "redirect:/main/products";
@@ -130,14 +129,6 @@ public class MainController {
         return "addOrder";
     }
 
-//    @PostMapping("/addOrder/product/{id}")
-//    public String addOrder(Model model, @PathVariable("id") Long id){
-//        model.addAttribute("order", new Order());
-//        model.addAttribute("product", productService.findById(id));
-//        System.out.println(productService.findById(id));
-//        return "addOrder";
-//    }
-
     @GetMapping("/orders")
     public String allOrders(Model model, Principal principal) {
         if (userService.findByLogin(principal.getName()).getRoles().contains(roleService.findById(2L))){
@@ -153,26 +144,14 @@ public class MainController {
         model.addAttribute("order", order);
         return "orderDetails";
     }
-//    @GetMapping("/allUsers")
-//    public String allUsers(Model model) {
-//        User user = new User();
-//        List<User> users  = userServiceImpl.findAll();
-//        model.addAttribute("user", user);
-//        model.addAttribute("roles", roleService.findAll());
-//        model.addAttribute("users", users);
-
-//        return "admin/users";
-
-//    }
 
     @GetMapping("/deleteOrder/{id}")
     public String deleteOrder(@PathVariable("id") Long id) {
         Order order = orderService.findById(id);
         Product product = order.getProduct();
-//        product.setInStock(product.getInStock() + order.getAmount());
         order.setProduct(product);
         orderService.deleteById(id);
-        return "redirect:/main/allOrders";
+        return "redirect:/main/orders";
     }
 
     @GetMapping("/deleteUser/{id}")
@@ -180,55 +159,21 @@ public class MainController {
         userService.deleteById(id);
         return "redirect:/main/allUsers";
     }
-//    @GetMapping("/editSupplier/{id}")
-//    public String editSupplierById(Model model, @PathVariable("id") Long id) {
-//        Supplier supplier = supplierService.findById(id);
-//        model.addAttribute("supplier", supplier);
-//        return "admin/editSupplier";
-//    }
-//
-//    @PostMapping("/editSupplier")
-//    public String editSupplier(@ModelAttribute("supplier") Supplier supplier) {
-//        supplierService.save(supplier);
-//        return "redirect:/main/allSuppliers";
-//    }
-//    @GetMapping("/editClient/{id}")
-//    public String editClientById(Model model, @PathVariable("id") Long id) {
-//        Client client = clientService.findById(id);
-//        model.addAttribute("client", client);
-//        return "admin/editClient";
-//    }
-//
-//    @PostMapping("/editClient")
-//    public String editClient(@ModelAttribute("client") Client client){
-//        clientService.save(client);
-//        return "redirect:/main/allClients";
-
-//    }
 
     @GetMapping("/editOrder/{id}")
     public String editOrderById(Model model, @PathVariable("id")Long id){
         Order order = orderService.findById(id);
-        List<Product> products = productService.findAll();
-
-        model.addAttribute("order", order);
-//        model.addAttribute("clients", clients);
-//        model.addAttribute("employees", employees);
-        model.addAttribute("products",  products);
-        return "admin/editOrder";
-    }
-
-    @PostMapping("editOrder")
-    @Transactional
-    public String editOrder(@ModelAttribute("order")Order order){
-        Order previousOrder = orderService.findById(order.getId());
-//        int previousOrderAmount = previousOrder.getAmount();
-//        int actualOrderAmount = order.getAmount();
         Product product = order.getProduct();
         order.setProduct(product);
-        orderService.save(order);
+        model.addAttribute("order", order);
+        model.addAttribute("product", product);
+        return "editOrder";
+    }
 
-        return "redirect:/main/allOrders";
+    @PostMapping("/editOrder")
+    public String editOrder(@ModelAttribute("order")Order order){
+        orderService.save(order);
+        return "redirect:/main/orders";
     }
 
 

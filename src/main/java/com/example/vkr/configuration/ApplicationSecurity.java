@@ -25,11 +25,6 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth){
-        auth.authenticationProvider(authenticationProvider());
-    }
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
                 .antMatchers("/**").permitAll()
@@ -38,6 +33,11 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/main/", true);
 
 
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth){
+        auth.authenticationProvider(authenticationProvider());
     }
 
     @Bean

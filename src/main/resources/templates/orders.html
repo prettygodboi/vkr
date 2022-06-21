@@ -32,7 +32,8 @@
     <h1>Мои заказы</h1>
     <div th:each="order : ${orders}" class="alert alert-info mt-2">
         <h3 th:text="${order.product.name}"/>
-        <p th:text="${order.orderDate}"/>
+<!--        <p th:text="${order.orderDate}"/>-->
+        <p th:text="${order.status}"/>
         <a th:href="@{'/main/orders/' + ${order.id}}" class="btn btn-primary">Детальнее</a>
     </div>
 </div>

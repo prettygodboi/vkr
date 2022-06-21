@@ -36,10 +36,6 @@ public class Order {
     @DateTimeFormat(pattern = "dd-mm-yyyy")
     private LocalDate orderDate;
 
-    private String receiverName;
-
-    private String receiverAddress;
-
     private String status;
 
     private String amount;
